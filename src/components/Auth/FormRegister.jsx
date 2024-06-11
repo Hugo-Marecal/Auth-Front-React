@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
+import { reqRegister } from "../../Api/reqAxios";
 
 const FormRegister = () => {
   const {
@@ -14,19 +14,8 @@ const FormRegister = () => {
   } = useForm({ mode: "onChange" });
 
   const onSubmit = async (formData) => {
-    await axios
-      .post("http://localhost:8080/api/signup", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        toast.success(response.data.successMessage);
-        reset();
-      })
-      .catch((error) => {
-        toast.error(error.response.data.errMessage);
-      });
+    await reqRegister(formData);
+    reset();
   };
 
   const verifBeforeSubmit = () => {

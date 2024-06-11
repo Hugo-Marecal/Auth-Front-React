@@ -2,6 +2,10 @@
 export default {
   content: ["./src/index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    fontSize: {
+      xs: "0.75rem",
+      sm: "0.84rem",
+    },
     fontFamily: {
       roboto: ["Roboto", "sans-serif"],
     },

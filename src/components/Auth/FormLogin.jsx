@@ -1,25 +1,17 @@
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
+import { reqLogin } from "../../Api/reqAxios";
+import { useAuth } from "../../context/AuthContext";
 
 const FormLogin = () => {
   const { register, handleSubmit, trigger } = useForm();
+  const { setIsLoggedIn } = useAuth();
 
   const onSubmit = async (formData) => {
-    await axios
-      .post("http://localhost:8080/api/login", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      .then((response) => {
-        toast.success(response.data.successMessage);
-      })
-      .catch((error) => {
-        toast.error(error.response.data.errMessage);
-      });
+    await reqLogin(formData);
+    setIsLoggedIn(true);
   };
 
   const verifBeforeSubmit = () => {
@@ -47,7 +39,7 @@ const FormLogin = () => {
           E-mail
         </label>
         <input
-          className="mb-6 pl-2 h-8 text-white bg-[#ffffff3a] rounded-lg placeholder:text-white focus:outline-none focus:ring-1 focus:ring-white"
+          className="mb-6 pl-2 h-8 text-white bg-[#ffffff3a] rounded-lg placeholder:text-[#ffffff80] focus:outline-none focus:ring-1 focus:ring-white"
           type="email"
           name="email"
           id="email"
@@ -58,14 +50,14 @@ const FormLogin = () => {
           Password
         </label>
         <input
-          className="mb-6 pl-2 h-8 text-white bg-[#ffffff3a] rounded-lg placeholder:text-white focus:outline-none focus:ring-1 focus:ring-white"
+          className="mb-6 pl-2 h-8 text-white bg-[#ffffff3a] placeholder:text-[#ffffff80] rounded-lg focus:outline-none focus:ring-1 focus:ring-white"
           type="password"
           name="password"
           id="password"
           placeholder="******"
           {...register("password", { required: true })}
         />
-        <button className="self-center border border-[#ffffff00] bg-[#ffffff3a] py-1 mt-3 w-3/4 rounded-full  hover:bg-black">
+        <button className="self-center border border-[#ffffff00] bg-[#ffffff3a]  py-1 mt-3 w-3/4 rounded-full  hover:bg-black">
           Login
         </button>
         <p className="text-center text-sm mt-4">

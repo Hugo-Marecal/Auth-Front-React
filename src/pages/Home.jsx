@@ -5,27 +5,33 @@ const Home = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex flex-col justify-center items-center flex-grow bg-gradient p-4 gap-20">
-        <h1 className="text-center text-white font-bold text-3xl">
-          Suivez le rythme. Optimisez vos rendements.
+      <main className="flex flex-col justify-center items-center flex-grow bg-[#fbfbfb] p-4 gap-5">
+        <h1 className="text-center  font-bold text-3xl">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </h1>
-        <p className="text-white text-center">
-          GestInvest vous offre une plateforme complète pour suivre vos actifs
-          et analyser leur performance. GestInvest vous donne les moyens de
-          réaliser vos ambitions financières. Explorez de nouvelles opportunités
-          dès aujourd&apos;hui avec GestInvest.
+        <p className="border bg-white  rounded-xl p-4 mx-4">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur
+          harum delectus provident reiciendis assumenda nisi soluta architecto,
+          sequi natus ullam reprehenderit sapiente distinctio libero! Fuga,
+          nihil delectus. Possimus, tempore ipsa?
         </p>
-        <p className="text-white text-center">
-          GestInvest vous offre une plateforme complète pour suivre vos actifs
-          et analyser leur performance. GestInvest vous donne les moyens de
-          réaliser vos ambitions financières. Explorez de nouvelles opportunités
-          dès aujourd&apos;hui avec GestInvest.
+        <p className="border bg-white  rounded-xl p-4 mx-4">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur
+          harum delectus provident reiciendis assumenda nisi soluta architecto,
+          sequi natus ullam reprehenderit sapiente distinctio libero! Fuga,
+          nihil delectus. Possimus, tempore ipsa?
         </p>
-        <p className="text-white text-center">
-          GestInvest vous offre une plateforme complète pour suivre vos actifs
-          et analyser leur performance. GestInvest vous donne les moyens de
-          réaliser vos ambitions financières. Explorez de nouvelles opportunités
-          dès aujourd&apos;hui avec GestInvest.
+        <p className="border bg-white  rounded-xl p-4 mx-4">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur
+          harum delectus provident reiciendis assumenda nisi soluta architecto,
+          sequi natus ullam reprehenderit sapiente distinctio libero! Fuga,
+          nihil delectus. Possimus, tempore ipsa?
+        </p>
+        <p className="border bg-white  rounded-xl p-4 mx-4">
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur
+          harum delectus provident reiciendis assumenda nisi soluta architecto,
+          sequi natus ullam reprehenderit sapiente distinctio libero! Fuga,
+          nihil delectus. Possimus, tempore ipsa?
         </p>
       </main>
       <Footer />
