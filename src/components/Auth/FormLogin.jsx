@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useForm } from "react-hook-form";
@@ -8,10 +9,13 @@ import { useAuth } from "../../context/AuthContext";
 const FormLogin = () => {
   const { register, handleSubmit, trigger } = useForm();
   const { setIsLoggedIn } = useAuth();
+  const location = useLocation();
 
   const onSubmit = async (formData) => {
-    await reqLogin(formData);
-    setIsLoggedIn(true);
+    const isLoginSuccessful = await reqLogin(formData);
+    if (isLoginSuccessful) {
+      setIsLoggedIn(true);
+    }
   };
 
   const verifBeforeSubmit = () => {
@@ -24,6 +28,15 @@ const FormLogin = () => {
     });
   };
 
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const successMessage = params.get("successMessage");
+
+    if (successMessage) {
+      toast.success(successMessage);
+    }
+  }, [location]);
+
   return (
     <main className="text-white flex flex-col flex-grow bg-gradient px-4">
       <h1 className="text-center text-2xl my-3 font-bold">Login Account</h1>
@@ -33,7 +46,7 @@ const FormLogin = () => {
           e.preventDefault();
           verifBeforeSubmit();
         }}
-        className="flex flex-col p-12 rounded-2xl h-3/4 mx-4"
+        className="flex flex-col p-12 rounded-2xl h-3/4 mx-4 md:w-2/4 md:mx-auto lg:w-1/4"
       >
         <label className="mb-2" htmlFor="email">
           E-mail

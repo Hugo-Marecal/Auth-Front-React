@@ -19,21 +19,25 @@ export const reqRegister = async (dataSend) => {
 };
 
 export const reqLogin = async (dataSend) => {
-  await axios
-    .post("http://localhost:8080/api/login", dataSend, {
-      headers: {
-        "Content-Type": "application/json",
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/login",
+      dataSend,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-    })
-    .then((response) => {
-      const token = response.data.token;
-      localStorage.setItem("token", token);
-      // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      toast.success(response.data.successMessage);
-    })
-    .catch((error) => {
-      toast.error(error.response.data.errMessage);
-    });
+    );
+
+    const token = response.data.token;
+    localStorage.setItem("token", token);
+    toast.success(response.data.successMessage);
+    return true;
+  } catch (error) {
+    toast.error(error.response.data.errMessage);
+    return false;
+  }
 };
 
 export const reqAccount = async () => {
@@ -44,7 +48,7 @@ export const reqAccount = async () => {
     return username;
   } catch (error) {
     console.error("Error fetching account data:", error);
-    throw error; // Renvoyer l'erreur pour la gérer en amont si nécessaire
+    throw error;
   }
 };
 
@@ -55,6 +59,6 @@ export const reqLogout = async () => {
     });
   } catch (error) {
     console.error("Error fetching account data:", error);
-    throw error; // Renvoyer l'erreur pour la gérer en amont si nécessaire
+    throw error;
   }
 };

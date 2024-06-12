@@ -36,7 +36,7 @@ const Header = () => {
         <img className="w-20" src="../assets/logo.png" alt="logo" />
       </Link>
       <nav className="text-white flex items-center justify-end w-1/3">
-        <div className="hidden w-full md:flex justify-between">
+        <div className="hidden w-full justify-between lg:flex lg:justify-evenly">
           <NavLinks />
         </div>
         <div className="mr-4 border border-white shadow-lg  py-2 px-4 rounded-full hover:border-black">
@@ -46,7 +46,7 @@ const Header = () => {
             <Link to="/login">Connexion</Link>
           )}
         </div>
-        <div className="flex items-center md:hidden">
+        <div className="flex items-center lg:hidden">
           <button onClick={toggleNavbar}>
             {isOpen ? (
               <X color="white" size="2em" />

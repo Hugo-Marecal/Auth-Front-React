@@ -38,7 +38,7 @@ const FormRegister = () => {
       <h1 className="text-center text-2xl my-3 font-bold">Create Account</h1>
       <h2 className="text-center text-lg my-3 ">Sign up to get started!</h2>
       <form
-        className="flex flex-col p-12 rounded-2xl h-3/4 mx-4"
+        className="flex flex-col p-12 rounded-2xl h-3/4 mx-4 md:w-2/4 md:mx-auto lg:w-1/4"
         onSubmit={(e) => {
           e.preventDefault();
           verifBeforeSubmit();

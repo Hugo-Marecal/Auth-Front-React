@@ -3,9 +3,9 @@ import Header from "../components/Header";
 
 const Home = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#fbfbfb]">
       <Header />
-      <main className="flex flex-col justify-center items-center flex-grow bg-[#fbfbfb] p-4 gap-5">
+      <main className="flex flex-col justify-center items-center flex-grow bg-[#fbfbfb] p-4 gap-5 md:w-2/3 md:mx-auto lg:w-2/4">
         <h1 className="text-center  font-bold text-3xl">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </h1>
