@@ -7,14 +7,19 @@ import { reqLogin } from "../../Api/reqAxios";
 import { useAuth } from "../../context/AuthContext";
 
 const FormLogin = () => {
-  const { register, handleSubmit, trigger } = useForm();
+  const { register, handleSubmit, trigger, reset } = useForm();
   const { setIsLoggedIn } = useAuth();
   const location = useLocation();
 
   const onSubmit = async (formData) => {
-    const isLoginSuccessful = await reqLogin(formData);
-    if (isLoginSuccessful) {
-      setIsLoggedIn(true);
+    try {
+      const isLoginSuccessful = await reqLogin(formData);
+      if (isLoginSuccessful) {
+        setIsLoggedIn(true);
+        reset();
+      }
+    } catch (error) {
+      toast.error("Login failed");
     }
   };
 
@@ -63,13 +68,19 @@ const FormLogin = () => {
           Password
         </label>
         <input
-          className="mb-6 pl-2 h-8 text-white bg-[#ffffff3a] placeholder:text-[#ffffff80] rounded-lg focus:outline-none focus:ring-1 focus:ring-white"
+          className="mb-3 pl-2 h-8 text-white bg-[#ffffff3a] placeholder:text-[#ffffff80] rounded-lg focus:outline-none focus:ring-1 focus:ring-white"
           type="password"
           name="password"
           id="password"
           placeholder="******"
           {...register("password", { required: true })}
         />
+        <Link
+          to="/forgot-password"
+          className="text-xs text-center text-[#ffffff5c] mb-3 underline hover:text-white"
+        >
+          Forgot your password ?
+        </Link>
         <button className="self-center border border-[#ffffff00] bg-[#ffffff3a]  py-1 mt-3 w-3/4 rounded-full  hover:bg-black">
           Login
         </button>

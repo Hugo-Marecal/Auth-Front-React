@@ -1,24 +1,67 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { reqRegister } from "../../Api/reqAxios";
+import { reqResetPassword } from "../../Api/reqAxios";
 
-const FormRegister = () => {
+const FormResetPassword = () => {
+  const navigate = useNavigate();
+  const query = new URLSearchParams(useLocation().search);
+  const token = query.get("reset_password_token");
+  const [isValidToken, setIsValidToken] = useState(false);
+  const [loading, setLoading] = useState(true);
   const {
     register,
     handleSubmit,
     trigger,
+    reset,
     formState: { errors },
     getValues,
-    reset,
-  } = useForm({ mode: "onChange" });
+  } = useForm();
+
+  useEffect(() => {
+    // if there is no token, redirect to login page
+    if (!token) {
+      toast.error("Not authorized");
+      navigate("/login");
+    }
+
+    // check if token is valid
+    const validateToken = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/validate-reset-password-token",
+          { token },
+        );
+        if (response.data.valid) {
+          setIsValidToken(true);
+        }
+      } catch (error) {
+        toast.error(error.response.data.errMessage);
+        navigate("/login");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    validateToken();
+  }, [token, navigate]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isValidToken) {
+    return <div>Invalid token</div>;
+  }
 
   const onSubmit = async (formData) => {
     try {
-      await reqRegister(formData);
+      await reqResetPassword(formData, token);
       reset();
     } catch (error) {
-      toast.error("Registration failed");
+      toast.error("Failed to reset password");
     }
   };
 
@@ -38,39 +81,20 @@ const FormRegister = () => {
   };
 
   return (
-    <main className="text-white flex flex-col flex-grow  bg-gradient px-4 ">
-      <h1 className="text-center text-2xl my-3 font-bold">Create Account</h1>
-      <h2 className="text-center text-lg my-3 ">Sign up to get started!</h2>
+    <main className="text-white flex flex-col flex-grow bg-gradient px-4">
+      <h1 className="text-center text-2xl my-3 font-bold">
+        Reset your password
+      </h1>
+      <h2 className="text-center text-lg m-3 text-[#ffffffc7] ">
+        Enter your new password below
+      </h2>
       <form
-        className="flex flex-col p-12 rounded-2xl h-3/4 mx-4 md:w-2/4 md:mx-auto lg:w-1/4"
         onSubmit={(e) => {
           e.preventDefault();
           verifBeforeSubmit();
         }}
+        className="flex flex-col p-12 rounded-2xl h-3/4 mx-4 md:w-2/4 md:mx-auto lg:w-1/4"
       >
-        <label className="mb-2" htmlFor="email">
-          E-mail
-        </label>
-        <input
-          className="mb-6 pl-2 h-8 text-white bg-[#ffffff3a] rounded-lg placeholder:text-[#ffffff80] focus:outline-none focus:ring-1 focus:ring-white"
-          type="email"
-          name="email"
-          id="email"
-          placeholder="@"
-          {...register("email", { required: true })}
-        />
-
-        <label className="mb-2" htmlFor="username">
-          Username
-        </label>
-        <input
-          className="mb-6 pl-2 h-8 text-white bg-[#ffffff3a] rounded-lg placeholder:text-[#ffffff80] focus:outline-none focus:ring-1 focus:ring-white"
-          type="text"
-          name="username"
-          id="username"
-          placeholder="John"
-          {...register("username", { required: true })}
-        />
         <label className="mb-2" htmlFor="password">
           Password
         </label>
@@ -100,15 +124,12 @@ const FormRegister = () => {
           placeholder="********"
           {...register("confirmPassword", { required: true })}
         />
-        <button
-          type="submit"
-          className="self-center border border-[#ffffff00] bg-[#ffffff3a] py-1 mt-3 w-3/4 rounded-full  hover:bg-black"
-        >
-          Sign up
+        <button className="self-center border border-[#ffffff00] bg-[#ffffff3a]  py-1 mt-3 w-full rounded-full  hover:bg-black">
+          Reset my password
         </button>
       </form>
     </main>
   );
 };
 
-export default FormRegister;
+export default FormResetPassword;

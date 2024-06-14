@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -17,7 +17,6 @@ const NavLinks = () => {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLoggedIn, setIsLoggedIn } = useAuth();
-  const navigate = useNavigate();
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
@@ -27,7 +26,6 @@ const Header = () => {
     await reqLogout();
     localStorage.removeItem("token");
     setIsLoggedIn(false);
-    navigate("/");
   };
 
   return (
@@ -39,11 +37,22 @@ const Header = () => {
         <div className="hidden w-full justify-between lg:flex lg:justify-evenly">
           <NavLinks />
         </div>
-        <div className="mr-4 border border-white shadow-lg  py-2 px-4 rounded-full hover:border-black">
+        <div className="">
           {isLoggedIn ? (
-            <button onClick={handleLogout}>Logout</button>
+            <Link
+              to="/"
+              className="mr-4 border border-white shadow-lg  py-2 px-4 rounded-full hover:border-black hover:text-black hover:bg-white transition-all duration-300 ease-in-out"
+              onClick={handleLogout}
+            >
+              Logout
+            </Link>
           ) : (
-            <Link to="/login">Connexion</Link>
+            <Link
+              to="/login"
+              className="mr-4 border border-white shadow-lg  py-2 px-4 rounded-full hover:border-black hover:text-black hover:bg-white transition-all duration-300 ease-in-out"
+            >
+              Connexion
+            </Link>
           )}
         </div>
         <div className="flex items-center lg:hidden">

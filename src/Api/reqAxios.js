@@ -62,3 +62,41 @@ export const reqLogout = async () => {
     throw error;
   }
 };
+
+export const reqForgotPassword = async (dataSend) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/forgot-password",
+      dataSend,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    if (response.data.successMessage) {
+      toast.success(response.data.successMessage);
+    }
+  } catch (error) {
+    toast.error(error.response.data.errMessage);
+  }
+};
+
+export const reqResetPassword = async (dataSend, token) => {
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/reset-password",
+      { dataSend, token },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    if (response.status === 200 && response.data.redirectUrl) {
+      window.location.href = response.data.redirectUrl;
+    }
+  } catch (error) {
+    toast.error(error.response.data.errMessage);
+  }
+};
